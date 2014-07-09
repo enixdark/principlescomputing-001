@@ -1,5 +1,5 @@
 <h2 class="course-page-header">
-    2048    <a class="coursera-reporter-link" title="Click here if you're experiencing technical problems or found errors in the course materials." target="_blank" href="https://class.coursera.org/principlescomputing-001/help/pages?url=https%3A%2F%2Fclass.coursera.org%2Fprinciplescomputing-001%2Fwiki%2Fview%3Fpage%3D2048">
+    Yahtzee    <a class="coursera-reporter-link" title="Click here if you're experiencing technical problems or found errors in the course materials." target="_blank" href="https://class.coursera.org/principlescomputing-001/help/pages?url=https%3A%2F%2Fclass.coursera.org%2Fprinciplescomputing-001%2Fwiki%2Fview%3Fpage%3Dyahtzee">
       Help
     </a>
     <a data-coursera-admin-helpwidget-link rel="help" href="https://class.coursera.org/mooc/help/pages/setup" title="Course Page Setup" style="display:none;">Learn more.</a>
@@ -8,151 +8,79 @@
 
 <p></p>
 <h4>Overview</h4>
-<p> 
-2048 is a simple grid-based numbers game. You can play it <a href="http://gabrielecirulli.github.io/2048/" target="_blank">here</a>.
-</p>
 <p>
-The object of the game is to combine tiles with the same number to make larger numbered tiles.  You "win" when you create a 2048 tile.  You can slide the tiles in any direction (left, right, up, or down) to move them.  When you do so, if two tiles of the same number end up next to each other, they combine to form a new tile with twice the value.  On each turn, you can slide all of the tiles left, right, up, or down.  The tiles all slide as far as they can go and merge as appropriate.  After the tiles slide a new tile is added to the board randomly.
+<a href="http://en.wikipedia.org/wiki/Yahtzee">Yahtzee</a> is a dice game played with 5 dice where you try to score the most points by matching certain combinations.  You can play the game <a href="http://www.yahtzee-game.com/">here</a>.  In Yahtzee, you get to roll the dice three times on each turn.  After the first roll, you may hold as many dice as you would like and roll the remaining free dice.  After this second roll, you may again hold as many dice as you would like and roll the rest. Once you stop (either because you have exhausted your three rolls or you are satisfied with the dice you have), you score the dice in one box on the score card.
 </p>
+<p></p>
 <p>
+For this mini-project, we will implement a strategy function designed to help you choose which dice to hold after your <b>second</b> roll. This function will consider all possible choices of dice to hold and recommend the choice that maximizes the expected value of your score after the final roll.  
+</p>
+<p></p>
+<p>
+To simplify the mini-project, we will only consider scores corresponding to the "upper" section of the scorecard.  Boxes in the upper section correspond to numbers on the dice.  After each turn, you may choose one empty box and enter the sum of the dice you have with the corresponding number.  For example, if you rolled $$(2, 3, 3, 3, 4)$$, you could score $$2$$ in the Twos box, $$9$$ in the Threes box, or $$4$$ in the Fours box.  (Restricting scoring to the upper section will also allow you to debug/test your strategy function on smaller numbers of dice.)
+</p>
+ 
 
-For this assignment, your task is to implement a version of the 2048 game.  Since we will provide a graphical user interface for the game, your task is to implement the game logic in terms of a <code>TwentyFortyEight</code> class in Python.  Although the original game is played on a $$4 \times 4$$ grid, your version should be able to have an arbitrary height and width.  Since we will use grids in several assignments, you should familiarize yourself with the <a href="grids">grid conventions</a> we will use in this course.
-</p>
-<p>
-We have provided the following <a href="http://www.codeskulptor.org/#poc_2048_template.py" target="_blank">template</a> that contains an outline of the <code>TwentyFortyEight</code> class.  The signature (name and parameters) of the functions, classes, and methods in this file must remain unchanged, but you may add any additional functions, methods, or other code that you need to. 
-</p>
-<p>
-</p>
 <h4>Testing your mini-project</h4>
-As always, testing is a critical part of the process of building your mini-project.  Remember you should be testing each method as you write it.  Don't try to implement all of the methods and then test,  You will have lots of errors that all interact in strange ways that make your program very hard to debug.
+The provided <a href="http://www.codeskulptor.org/#poc_yahtzee_template.py">template</a> includes the function <code>gen_all_sequences</code> from lecture (which you should not modify) as well as a <code>run_example</code> function that you may modify as you see fit while developing, debugging, and testing your strategy function.  The template includes the stubs for the four functions that you will need to implement for this mini-project. Remember you should be testing each function as you write it.  Don't try to implement all of the functions.  If you do,  you will have errors that will interact in inexplicable ways making your program hard to debug.
 <p>
 </p>
 <ul>
 <li>
-As you implement the <code>TwentyFortyEight</code> class, we suggest that you build your own collection of tests using the <a href="http://www.codeskulptor.org/#poc_simpletest.py" target=""><code>poc_simpletest</code> module</a> that we have provided.  Please review this <a href="view?page=testing_methodogy">page</a> for an overview of the capabilities of this module.  These tests can be organized into a separate test suite that you can import and run in your program as we demonstrated for <a href="mancala">Solitaire Mancala</a>.  To facilitate testing on the first few mini-projects, we will create a thread in the forums where students may share and refine their test suites for each mini-project.
-
+As you implement your strategy function, we suggest that you build your own collection of tests using the <a href="http://www.codeskulptor.org/#poc_simpletest.py" target=""><code>poc_simpletest</code> module</a> that we have provided.  Please review this <a href="view?page=testing_methodogy">page</a> for an overview of the capabilities of this module.  These tests can be organized into a separate test suite that you can import and run in your program as we demonstrated for <a href="mancala">Solitaire Mancala</a>.
 <p></p>
 </li>
 <li>
-Note that the template imports a file <code>poc_2048_gui</code> which includes a  GUI that we have written for playing 2048 in CodeSkulptor.  This GUI is created and run by the last line of the template.  (For information on how importing works, please <a href="view?page=imports">this page</a>.) While you are implementing the <code>TwentyFortyEight</code> class, you should comment out these two lines and test each method individually using your test suite.  Once your code has passed these tests, you can uncomment the two lines that import and run the GUI. You can then use this GUI to further test your code.
+If you try to test your code with five dice, it will be more difficult to understand what is going on.  Instead, we recommend that you should test first with two dice.   In particular, you may want to work out some examples by hand with two dice and create a small test suite that checks these examples.  If you are having trouble with the case of two dice, you should take a look at this week's <a href="dice_game">practice activity</a>. 
+<p></p>
 </li>
-<p>
-</p>
 <li>
-Finally, submit your code (with the two lines that import and run the GUI commented out) to this <a href="http://codeskulptor.appspot.com/owltest/?urlTests=poc.week0_tests.py&amp;urlPylintConfig=poc.pylint_config.py&amp;imports=%7Bpoc:(poc_2048_gui)%7D" target="">Owltest</a> page.  The OwlTest page has a pale yellow background and does <b>not</b> submit your project to Coursera.  OwlTest is just meant to allow you to test your mini-project automatically.  Note that trying to debug your mini-project using the tests in OwlTest can be very tedious since they are slow and give limited feedback.  Instead, we <i>strongly</i> suggest that you first test your program using your own test suite and the provided GUI.  Programs that pass these tests are much more likely to pass the OwlTest tests.
+Finally, submit your code (with the calls to <code>run_example</code> commented out) to this <a href="http://codeskulptor.appspot.com/owltest?urlTests=poc.week3_tests.py&amp;urlPylintConfig=poc.pylint_config2.py" target="_blank">Owltest</a> page.  This page will automatically test your mini-project.  It will run faster if you comment out the call to <code>run_example</code> before submitting.  Note that trying to debug your mini-project using the tests in OwlTest can be very tedious since they are slow and give limited feedback.  Instead, we <i>strongly</i> suggest that you first test your program using your own test suite.  Programs that pass these tests are much more likely to pass the OwlTest tests.
 </li>
 </ul>
 <p>
 Remember that OwlTest uses Pylint to check that you have followed the <a href="view?page=style_guidelines">coding style guidelines</a> for this class. Deviations from these style guidelines will result in deductions from your final score.  Please read the feedback from Pylint closely.  If you have questions, feel free to consult <a href="view?page=pylint_errors">this page</a> and the class forums. </p>
 <p>
-When you are ready to submit your code to be graded formally, submit your code to the CourseraTest page for this mini-project that is linked on the main assignment page.  Note that the CourseraTest page looks similar to the OwlTest page, but they are <em>not</em> the same!  The CourseraTest page has a <b>white</b> background and does submit your grade to Coursera.
+When you are ready to submit your code to be graded formally, submit your code to the CourseraTest page for this mini-project that is linked on the main assignment page.
 </p>
-<h4>Phase One</h4>
-<p></p>
+<h4>Implementation</h4>
 <p>
-You should first implement a function <code>merge(line)</code> that models the process of merging all of the tile values in a single row or column.  This function takes the list <code>line</code> as a parameter and returns a new list with the tile values from <code>line</code> slid towards the front of the list and merged. This is one of the more challenging parts of implementing the game.  Remember, you are always sliding the values in the list towards the front of the list (the list position with index $$0$$).  (You will make sure you order the entries in <code>line</code> appropriately when you call this function later.)   Empty grid squares with no displayed value will be assigned a value of zero in our representation.
 </p>
 <p>
-For example, if a row of the board started as follows:
-</p>
-<p>
-<img src="https://storage.googleapis.com/codeskulptor-assets/poc_2022.png" width="200"></p>
-<p>
-And you slide the tiles left, the row would become:
-</p>
-<p>
-<img src="https://storage.googleapis.com/codeskulptor-assets/poc_4200.png" width="200"></p>
-<p>
-Note that the two leftmost tiles merged to become a 4 and the third 2 just slides over next to the 4.
-</p>
-<p>
-A given tile can only merge once on any given turn, although many pairs of tiles could merge on a single turn.
-</p>
-<p>
-For the above example, the input to the <code>merge</code> function would be the list <code>[2, 0, 2, 2]</code>.  The function should then produce the output <code>[4, 2, 0, 0]</code>.  We suggest you begin to implement this function as follows:
-</p>
-<p>
-</p>
-<ol>
-<li>Start with a result list that contains the same number of $$0$$'s as the length of the <code>line</code> argument.
-</li>
-<li>Iterate over the <code>line</code> input looking for non-zero entries.  For each non-zero entry, put the value into the next available entry of the result list (starting at position 0).
-</li>
-</ol>
-<p>
-Notice if you only follow this process, you would end up with the result <code>[2, 2, 2, 0]</code>.  
-</p>
-<p>
-Now you should think through what you should add to your function in order to merge tiles.  Keep in mind, however, that any tile should only be merged once and that these merges should happen in order from lowest index to highest index.  For instance, on the input <code>[2, 0, 2, 4]</code>, the result should be <code>[4, 4, 0, 0]</code>, <b>not</b> <code>[8, 0, 0, 0]</code>.  In order to merge two tiles, you will need to check if the last tile you added to the result list is the same as the current tile you are trying to add.  If so, then you should merge the tiles.  You will also need to track whether the last tile you added was merged, so that you do not merge a tile twice.  We suggest using a boolean flag that you set to <code>True</code> or <code>False</code> appropriately to indicate whether the last tile was merged.
-</p>
-<p>
-Here are some simple tests you should try:
+Your task is to implement the following four functions: <code>score</code>, <code>expected_value</code>, <code>gen_all_holds</code>,  and  <code>strategy</code>.  These four functions should do the following:
 </p>
 <ul>
+<li> 
+<code>score(hand):</code>  This function takes a <code>hand</code> (which is a tuple of die values) and computes a score for the hand as the maximum of the possible values for each choice of box in the upper section of the Yahtzee scorecard. </li>
+<p>
+</p>
 <li>
-<code>[2, 0, 2, 4]</code> should return <code>[4, 4, 0, 0]</code>
+<code>expected_value(held_dice, num_die_sides, num_free_dice):</code> 
+This function computes the expected value of the scores for the possible Yahtzee hands that result from holding some dice and rolling the remaining free dice. The dice being held are specified by the tuple <code>held_dice</code>.  The number of sides and the number of dice that are free to be rolled are specified by <code>num_die_sides</code> and <code>num_free_dice</code>, respectively.  You should use <code>gen_all_sequences</code> to compute all possible rolls for the dice being rolled. As an example, in a standard Yahtzee game using five dice, the length of <code>held_dice</code> plus <code>num_free_dice</code> should always be five.
 </li>
+<p>
+</p>
 <li>
-<code>[0, 0, 2, 2]</code> should return <code>[4, 0, 0, 0]</code>
-</li>
+<code>gen_all_holds(hand):</code>  This function takes a tuple <code>hand</code> and returns the set of all possible tuples formed by discarding a subset of the entries in <code>hand</code>.  The entries in each of these tuples correspond to the dice that will be held.  If the tuple <code>hand</code> has the entries $$(h_0, h_1, ..., h_{m-1})$$, the returned tuples should have the form $$(h_{i_0}, h_{i_1}, ..., h_{i_{k-1}})$$ where $$0\leq k \leq m$$ and the integer indices satisfy $$0\leq i_0 &lt; i_1 &lt;  ...  &lt; i_{k-1} &lt; m$$.  In the case where values in the tuple <code>hand</code> happen to be distinct, the set of tuples returned by <code>gen_all_holds</code> will correspond to all possible subsets of <code>hand</code>.</li>
+<p>
+</p>
 <li>
-<code>[2, 2, 0, 0]</code> should return <code>[4, 0, 0, 0]</code>
-</li>
-<li>
-<code>[2, 2, 2, 2]</code> should return <code>[4, 4, 0, 0]</code>
-</li>
-<li>
-<code>[8, 16, 16, 8]</code> should return <code>[8, 32, 8, 0]</code>
+<code>strategy(hand, num_die_sides):</code>  Thus function takes a <code>hand</code> and computes which dice to hold to maximize the expected value of the score of the possible hands that result from rolling the remaining free dice (with the specified number of sides).  The function should return a tuple consisting of this maximal expected value and the choice of dice that should be held to achieve this value.  If there are several holds that generate the maximal expected value, you may return any of these holds.
 </li>
 </ul>
-<h4>Phase Two</h4>
-<p>
-In the template, we have provided the skeleton of a <code>TwentyFortyEight</code> class.  You should first implement the grid logic.  The <code>__init__</code> method takes the number of rows and columns in the grid.  You should store the number of rows and columns and then reset the grid to have $$row \times col$$ zeros (using the <code>reset</code> method, which will also be called when you click the "reset" button in the GUI).  <b>Note that neither <code>__init__</code> nor <code>reset</code> should add any tiles to the grid.</b>  The <code>new_tile</code> method, which you will implement in phase 3, will be called (by the GUI or tester) to add new tiles to the grid, as necessary.
-</p>
-<p>
-You should then implement the <code>get_grid_height</code>, <code>get_grid_width</code>, <code>__str__</code>, and <code>get_tile</code> methods.  The first three methods should return the number of rows in the grid, return the number of columns in the grid, and return a string representation of the grid (to help you debug).  The <code>get_tile(self, row, col)</code> method should return the value of the tile at the position $$(row, col)$$ in the grid.  Note that the rows of the grid are indexed from top to bottom starting at zero while the columns are indexed from left to right starting at zero.
-</p>
-<p>
-You should test these functions.  During testing, you will want to implement the <code>set_tile</code> method so that you can start with different board states.
-</p>
-<h4>Phase Three</h4>
-<p>
-You are now ready to implement the final two methods, <code>new_tile</code> and <code>move</code>.  The new tile method should randomly select an empty grid square (one that currently has a value of $$0$$) if one exists and place a new tile in that square.  The new tile should have the value 2 90% of the time and the value 4 10% of the time.
-</p>
-The <code>move</code> method is where the real logic of the game goes.  This method should slide all of the tiles in the given direction.  The <code>direction</code> argument will be one of the constants, <code>UP</code>, <code>DOWN</code>, <code>LEFT</code>, or <code>RIGHT</code>.  There are many ways of implementing the <code>move</code> method.  Here is one approach that will help you avoid writing separate pieces of code for each direction.  
+As you implement these four functions, make sure that you think about the best order to write and test them in.  You may add extra helper functions if so desired. However, the signature of the four functions above must match the provided description as they will be tested by the machine grader.
+<h4> Coding <code>gen_all_holds</code>
+</h4>
+  Implementing <code>gen_all_holds</code> is one of the main challenges of this mini-project.  While its implementation is short, the actual code requires thought.  Since tuples are immutable, your algorithm for computing the required set of tuples cannot directly delete from the tuple <code>hand</code>.  Instead, <code>gen_all_holds</code> should compute the set of all possible holds in a manner very similar to that of <code>gen_all_sequences</code>.  In particular, your implementation should iterate over the entries of <code>hand</code> and compute all possible holds for the first $$k$$ entries in <code>hand</code> using all possible holds for the first $$k-1$$ entries of <code>hand</code>. 
 <p></p>
 <p>
-For each direction, we recommend pre-computing a list of the indices for the <em>initial</em> tiles in that direction. Initial tiles are those whose values appear first in the list passed to the <code>merge</code> function.  For example, the initial tiles for the <code>UP</code> direction lie along the top row of the grid and in a $$4 x 4$$ grid have indices <code>[(0, 0), (0, 1), (0, 2), (0, 3)]</code>.  Since these lists of indices will be used throughout the game,  we recommend computing them once in the <code>__init__</code> method and then storing them in  a dictionary where the keys are the direction constants (<code>UP</code>, <code>DOWN</code>, <code>LEFT</code>, and <code>RIGHT</code>).
+To help you test your implementation of <code>gen_all_holds</code>, you may make use of this short test suite:
 </p>
+<pre><code>#import poc_holds_testsuite
+#poc_holds_testsuite.run_suite(gen_all_holds)
+</code></pre>
 <p></p>
 <p>
-With this dictionary computed, the <code>move</code> method can be implemented as follows.  Given a direction, iterate over the list of initial tiles for that direction and perform the following three steps for each initial tile:
-</p>
-<ol>
-<li> Use the offsets in the provided <code>OFFSETS</code> dictionary to iterate over the entries of the associated row or column, retrieve the tile values from those entries, and store them in a temporary list.
-</li>
-<li> Use your <code>merge</code> function to merge the tile values in this temporary list.
-</li>
-<li> Iterate over the entries in the row or column again and store the merged tile values back into the grid 
-</li>
-</ol>
-<p>
-To illustrate this process, consider updating the state of the game via the method call  <code>move(UP)</code> in the configuration shown below.  </p>
-<p>
-<img src="https://storage.googleapis.com/codeskulptor-assets/poc_2048_before.png" width="200"></p>
-<p>
-Following our outline above, we retrieve the list of initial tiles <code>[(0, 0), (0, 1), (0, 2), (0, 3)]</code> for the top row of the grid and use the offset <code>(1, 0)</code> associated with the <code>UP</code> direction to iterate over the grid indices for each column.  For the second column, these indices are <code>[(0, 1), (1, 1), (2, 1), (3, 1)]</code>.  Using these indices, we can create a temporary list <code>[2, 0, 2, 2]</code> that holds the tile values in this column, apply <code>merge</code> to compute the merged list <code>[4, 2, 0, 0]</code>, and finally copy the new merged tile values back into the grid.  This sequence of operations yields the grid shown below. </p>
-<p>
-</p>
-<p></p>
-<p>
-<img src="https://storage.googleapis.com/codeskulptor-assets/poc_2048_after.png" width="200"></p>
-<p>
-If you have done this correctly, a single call to the <code>move</code> method should slide all of the tiles in the given direction.  All that remains is that you must determine if any tiles have moved.  You can easily do this when you put the line back into the grid.  For each element, check if it has changed and keep track of whether any tiles have changed.  If so, you should add a new tile to the grid, by calling your <code>new_tile</code> method.  Now, you are ready to run the GUI and play 2048!
-</p>
-<p>
-Note that you have not written any logic at this point to determine whether the user has "won" or "lost" the game.  This is not required for this assignment, but you can think about how to do so and add it if you would like.
-</p>
-<p></p>
+Once you have working code, you may wish to extend the <code>score</code> function to include scores from the lower section of the Yahtzee scorecard.  (This is optional and isn't graded.)  With this extension, the <code>strategy</code> function gives quite accurate recommendations.  Impress your friends by consistently  beating them at Yahtzee!</p>
 <hr>
 <div>
